@@ -71,18 +71,18 @@ export default function Notifications() {
       </div>
 
       {notifications.length === 0 ? (
-        <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-sm border border-zinc-100 dark:border-zinc-800 p-12 text-center">
+        <div className="bg-white  rounded-2xl shadow-sm border border-zinc-100  p-12 text-center">
           <Bell size={48} className="mx-auto text-zinc-300 dark:text-zinc-600 mb-4" />
-          <p className="text-zinc-500 dark:text-zinc-400">No notifications yet</p>
+          <p className="text-zinc-500 ">No notifications yet</p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-sm border border-zinc-100 dark:border-zinc-800 overflow-hidden">
-          <div className="divide-y dark:divide-zinc-700">
+        <div className="bg-white  rounded-3xl shadow-sm border border-zinc-100  overflow-hidden">
+          <div className="divide-y">
             {notifications.map((notif: any) => (
               <div
                 key={notif.id}
-                className={`px-8 py-6 flex gap-4 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors ${
-                  !notif.read ? 'bg-blue-50 dark:bg-blue-950/30' : ''
+                className={`px-8 py-6 flex gap-4 hover:bg-zinc-50 transition-colors ${
+                  !notif.read ? 'bg-blue-50' : ''
                 }`}
               >
                 <div className="mt-1">
@@ -96,7 +96,7 @@ export default function Notifications() {
                       {new Date(notif.createdAt).toLocaleDateString('en-IN')}
                     </span>
                   </div>
-                  <p className="text-zinc-600 dark:text-zinc-400 text-sm mt-1">
+                  <p className="text-zinc-600 text-sm mt-1">
                     {notif.message}
                   </p>
                 </div>

@@ -36,10 +36,10 @@ export default function MyRequests() {
 
     try {
       await api.put(`/requests/${requestId}/cancel`);
-      alert("✅ Request cancelled successfully!");
+      alert(" Request cancelled successfully!");
       fetchMyRequests();
     } catch (error) {
-      alert("❌ Failed to cancel request");
+      alert(" Failed to cancel request");
     }
   };
 
@@ -47,20 +47,20 @@ export default function MyRequests() {
     e.preventDefault();
     try {
       await api.post('/requests', newRequest);
-      alert("✅ Request submitted successfully!");
+      alert(" Request submitted successfully!");
       setShowCreateModal(false);
       setNewRequest({ title: '', description: '', category: 'Hardware', priority: 'Medium' });
       fetchMyRequests();
     } catch (error) {
-      alert("❌ Failed to create request");
+      alert(" Failed to create request");
     }
   };
 
   const getStatusBadge = (statusName) => {
     const status = (statusName || '').toString().toLowerCase();
-    if (status === 'approved') return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300';
-    if (status === 'rejected') return 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300';
-    return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300';
+    if (status === 'approved') return 'bg-green-100 text-green-700';
+    if (status === 'rejected') return 'bg-red-100 text-red-700  ';
+    return 'bg-yellow-100 text-yellow-700 ';
   };
 
   if (loading) return <div className="p-12 text-center text-xl">Loading your requests...</div>;
@@ -81,10 +81,10 @@ export default function MyRequests() {
         </button>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-sm border border-zinc-100 dark:border-zinc-800 overflow-hidden">
+      <div className="bg-white  rounded-3xl shadow-sm border border-zinc-100 overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="bg-zinc-50 dark:bg-zinc-800 border-b">
+            <tr className="bg-zinc-50 ">
               <th className="px-8 py-5 text-left">Title</th>
               <th className="px-8 py-5 text-left">Description</th>
               <th className="px-8 py-5 text-left">Category</th>
@@ -94,13 +94,13 @@ export default function MyRequests() {
               <th className="px-8 py-5 text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y dark:divide-zinc-700">
+          <tbody className="divide-y ">
             {requests.map((req: any) => {
               const status = (req.status?.statusName || req.status || 'Pending').toString().toLowerCase();
               const canCancel = status === 'pending';
 
               return (
-                <tr key={req.requestId} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                <tr key={req.requestId} className="hover:bg-zinc-50 ">
                   <td className="px-8 py-5 font-medium">{req.title}</td>
                   <td className="px-8 py-5 text-zinc-600 dark:text-zinc-400 max-w-xs truncate">
                     {req.description || '—'}
@@ -136,7 +136,7 @@ export default function MyRequests() {
       {/* New Request Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-zinc-900 rounded-3xl w-full max-w-lg p-8">
+          <div className="bg-white  rounded-3xl w-full max-w-lg p-8">
             <h2 className="text-2xl font-semibold mb-6">Create New Service Request</h2>
             <form onSubmit={handleCreateRequest} className="space-y-6">
               <div>
@@ -145,7 +145,7 @@ export default function MyRequests() {
                   type="text"
                   value={newRequest.title}
                   onChange={(e) => setNewRequest({ ...newRequest, title: e.target.value })}
-                  className="w-full px-5 py-4 border dark:border-zinc-700 rounded-3xl focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-5 py-4 border  rounded-3xl focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g., Laptop not booting"
                   required
                 />
@@ -157,7 +157,7 @@ export default function MyRequests() {
                   value={newRequest.description}
                   onChange={(e) => setNewRequest({ ...newRequest, description: e.target.value })}
                   rows={4}
-                  className="w-full px-5 py-4 border dark:border-zinc-700 rounded-3xl focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-5 py-4 border  rounded-3xl focus:ring-2 focus:ring-blue-500"
                   placeholder="Describe the issue in detail..."
                   required
                 />
@@ -169,7 +169,7 @@ export default function MyRequests() {
                   <select
                     value={newRequest.category}
                     onChange={(e) => setNewRequest({ ...newRequest, category: e.target.value })}
-                    className="w-full px-5 py-4 border dark:border-zinc-700 rounded-3xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-5 py-4 border rounded-3xl focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="Hardware">Hardware</option>
                     <option value="Software">Software</option>
@@ -184,7 +184,7 @@ export default function MyRequests() {
                   <select
                     value={newRequest.priority}
                     onChange={(e) => setNewRequest({ ...newRequest, priority: e.target.value })}
-                    className="w-full px-5 py-4 border dark:border-zinc-700 rounded-3xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-5 py-4 border  rounded-3xl focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
@@ -194,7 +194,7 @@ export default function MyRequests() {
               </div>
 
               <div className="flex gap-4">
-                <button type="button" onClick={() => setShowCreateModal(false)} className="flex-1 py-4 border dark:border-zinc-700 rounded-3xl font-medium">
+                <button type="button" onClick={() => setShowCreateModal(false)} className="flex-1 py-4 border  rounded-3xl font-medium">
                   Cancel
                 </button>
                 <button type="submit" className="flex-1 bg-blue-600 text-white py-4 rounded-3xl font-semibold">
