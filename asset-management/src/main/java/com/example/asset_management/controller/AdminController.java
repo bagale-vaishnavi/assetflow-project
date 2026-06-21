@@ -24,11 +24,15 @@ public class AdminController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // Update user (Admin only)
-    @PutMapping("/users/{id}")
+       @DeleteMapping("/users/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        User user = userService.updateUser(id, updatedUser);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(("Failed To Delete User ( User is Assigned with Asset)"));
+        }
     }
 }

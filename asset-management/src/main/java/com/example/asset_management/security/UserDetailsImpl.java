@@ -21,6 +21,7 @@ public class UserDetailsImpl implements UserDetails {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.role = user.getRole().getRoleName();
+        System.out.println("ROLE FROM DB = [" + role + "]");
     }
 
     @Override
@@ -55,4 +56,5 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isCredentialsNonExpired() { return true; }
     @Override
     public boolean isEnabled() { return true; }
+
 }

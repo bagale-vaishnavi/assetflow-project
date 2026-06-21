@@ -20,6 +20,6 @@ public class AuthRequest {
     @NotBlank
     private String password;
 
-    private String name;     // ← Add this
-    private String role;     // ← Add this (EMPLOYEE or MANAGER)
+    private String name;
+    private String role;
 }

@@ -28,7 +28,7 @@ public class Approval {
     private User approvedBy;
 
     @Column(nullable = false)
-    private String approvalStatus = "PENDING";   // PENDING, APPROVED, REJECTED
+    private String approvalStatus = "PENDING";
 
     private LocalDateTime approvedAt = LocalDateTime.now();
 }

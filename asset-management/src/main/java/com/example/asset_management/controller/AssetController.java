@@ -3,14 +3,17 @@ package com.example.asset_management.controller;
 
 import com.example.asset_management.entity.Asset;
 import com.example.asset_management.entity.AssetAssignment;
+import com.example.asset_management.entity.AssetCategory;
 import com.example.asset_management.repository.AssetAssignmentRepository;
 import com.example.asset_management.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
 @RequestMapping("/api/assets")
@@ -26,6 +29,7 @@ public class AssetController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Asset> addAsset(@RequestBody Asset asset) {
+        System.out.println("ADD ASSET CONTROLLER HIT");
         Asset saved = assetService.addAsset(asset);
         return ResponseEntity.ok(saved);
     }
@@ -75,12 +79,18 @@ public class AssetController {
     public ResponseEntity<List<AssetAssignment>> getAllAssignments() {
         return ResponseEntity.ok(assetAssignmentRepository.findAll());
     }
+    @GetMapping("/debug-auth")
+    public String debugAuth(Authentication authentication) {
+        System.out.println("Authorities: " + authentication.getAuthorities());
+        return authentication.getAuthorities().toString();
+    }
     @DeleteMapping("/{assetId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteAsset(@PathVariable Long assetId) {
         assetService.deleteAsset(assetId);
         return ResponseEntity.ok("Asset deleted successfully");
     }
+
     @PutMapping("/{assetId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Asset> updateAsset(
@@ -94,4 +104,6 @@ public class AssetController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
 }

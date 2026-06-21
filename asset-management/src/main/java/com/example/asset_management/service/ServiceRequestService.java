@@ -9,11 +9,14 @@ import com.example.asset_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.asset_management.repository.ServiceRequestRepository;
 
 import java.util.List;
 
 @Service
 public class ServiceRequestService {
+    @Autowired
+    private ServiceRequestRepository serviceRequestRepository;
 
     @Autowired
     private ServiceRequestRepository requestRepository;
@@ -29,6 +32,8 @@ public class ServiceRequestService {
 
     @Autowired
     private NotificationService notificationService;
+
+
 
     public ServiceRequest createRequest(ServiceRequest request, Long userId) {
         User user = userRepository.findById(userId)
@@ -98,6 +103,9 @@ public class ServiceRequestService {
         requestRepository.save(request);
 
         auditLogService.logAction(userId, "Request Cancelled: " + request.getTitle());
+    }
+    public void deleteRequest(Long requestId) {
+        serviceRequestRepository.deleteById(requestId);
     }
 
 }

@@ -19,7 +19,7 @@ public class ServiceRequestController {
     @Autowired
     private ServiceRequestService serviceRequestService;
 
-    // Employee: Create new service request
+
     @PostMapping
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMIN')")
     public ResponseEntity<ServiceRequest> createRequest(@RequestBody ServiceRequest request) {
@@ -31,7 +31,7 @@ public class ServiceRequestController {
         return ResponseEntity.ok(saved);
     }
 
-    // Employee: View my own requests
+
     @GetMapping("/my")
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMIN')")
     public ResponseEntity<List<ServiceRequest>> getMyRequests() {
@@ -41,21 +41,20 @@ public class ServiceRequestController {
         return ResponseEntity.ok(serviceRequestService.getMyRequests(userId));
     }
 
-    // Manager + Admin: View all requests
     @GetMapping
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     public ResponseEntity<List<ServiceRequest>> getAllRequests() {
         return ResponseEntity.ok(serviceRequestService.getAllRequests());
     }
 
-    // Manager + Admin: View pending requests
+
     @GetMapping("/pending")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     public ResponseEntity<List<ServiceRequest>> getPendingRequests() {
         return ResponseEntity.ok(serviceRequestService.getPendingRequests());
     }
 
-    // Manager: Approve or Reject request
+
     @PutMapping("/{requestId}/approve")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     public ResponseEntity<String> approveRequest(
@@ -65,13 +64,13 @@ public class ServiceRequestController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Long managerId = ((com.example.asset_management.security.UserDetailsImpl) auth.getPrincipal()).getUserId();
 
-        // You can also call ApprovalService.approveRequest here if you want separate approval record
+
         serviceRequestService.updateRequestStatus(requestId, decision.equalsIgnoreCase("APPROVED") ? "Approved" : "Rejected", managerId);
 
         return ResponseEntity.ok("Request " + decision + " successfully");
     }
 
-    // Employee: Cancel own request
+
     @PutMapping("/{requestId}/cancel")
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMIN')")
     public ResponseEntity<String> cancelRequest(@PathVariable Long requestId) {
@@ -81,5 +80,16 @@ public class ServiceRequestController {
         serviceRequestService.cancelRequest(requestId, userId);
         return ResponseEntity.ok("Request cancelled successfully");
     }
+
+    @DeleteMapping("/{requestId}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
+    public ResponseEntity<String> deleteRequest(
+            @PathVariable Long requestId) {
+
+        serviceRequestService.deleteRequest(requestId);
+
+        return ResponseEntity.ok("Request deleted successfully");
+    }
+    
 
 }

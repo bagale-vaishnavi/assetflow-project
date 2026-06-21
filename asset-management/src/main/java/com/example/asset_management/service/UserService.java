@@ -7,9 +7,12 @@ import com.example.asset_management.entity.User;
 import com.example.asset_management.repository.RoleRepository;
 import com.example.asset_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 //import javax.management.relation.Role;
 import java.util.List;
@@ -69,5 +72,9 @@ public class UserService {
         User saved = userRepository.save(user);
         auditLogService.logAction(user.getUserId(), "User Updated: " + user.getName());
         return saved;
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

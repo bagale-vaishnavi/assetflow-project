@@ -39,4 +39,6 @@ public class Asset {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+    @Column(nullable = false)
+    private Integer quantity = 1;
 }

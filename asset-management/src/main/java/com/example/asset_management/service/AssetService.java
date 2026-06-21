@@ -78,8 +78,17 @@ public class AssetService {
         auditLogService.logAction(null, "Asset Status Updated: " + asset.getAssetName() + " -> " + status);
     }
     public void deleteAsset(Long assetId) {
+
+        boolean assigned = assignmentRepository.existsByAssetAssetId(assetId);
+
+        if (assigned) {
+            throw new RuntimeException(
+                    "Cannot delete asset because it is assigned to an employee");
+        }
+
         assetRepository.deleteById(assetId);
     }
+
     @Transactional
     public Asset updateAsset(Long assetId, Asset updatedAsset) {
         Asset asset = assetRepository.findById(assetId)
@@ -87,7 +96,11 @@ public class AssetService {
 
         asset.setAssetName(updatedAsset.getAssetName());
         asset.setAssetTag(updatedAsset.getAssetTag());
+        asset.setQuantity(updatedAsset.getQuantity());
         asset.setStatus(updatedAsset.getStatus());
+        asset.setPurchaseDate(updatedAsset.getPurchaseDate());
+        asset.setAssetType(updatedAsset.getAssetType());
+
 
         return assetRepository.save(asset);
     }
