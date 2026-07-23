@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:9090/api',     // ← Must be 8080
+  baseURL: 'assetflow-project-production.up.railway.app',     // ← Must be 8080
   timeout: 10000,
 });
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import api from '../../lib/api';
 import { Bell, Trash2, CheckCircle } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+//import { useAuth } from '../../context/AuthContext';
 
 export default function Notifications() {
-  const { user } = useAuth();
+//   const { user } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,7 +23,7 @@ export default function Notifications() {
     }
   };
 
-  const markAsRead = async (id) => {
+  const markAsRead = async (id : number) => {
     try {
       await api.put(`/notifications/${id}/read`);
       fetchNotifications();
@@ -32,7 +32,7 @@ export default function Notifications() {
     }
   };
 
-  const deleteNotification = async (id) => {
+  const deleteNotification = async (id: number) => {
     if (!window.confirm("Delete this notification?")) return;
     try {
       await api.delete(`/notifications/${id}`);

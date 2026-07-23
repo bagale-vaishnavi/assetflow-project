@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import api from '../../lib/api';
 import { Plus, XCircle } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+//import { useAuth } from '../../context/AuthContext';
+//import type { FormEvent } from 'react';
 
 export default function MyRequests() {
-  const { user } = useAuth();
+//   const { user } = useAuth();
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -31,7 +32,7 @@ export default function MyRequests() {
     }
   };
 
-  const cancelRequest = async (requestId) => {
+  const cancelRequest = async (requestId : number) => {
     if (!window.confirm("Cancel this request?")) return;
 
     try {
@@ -43,7 +44,7 @@ export default function MyRequests() {
     }
   };
 
-  const handleCreateRequest = async (e) => {
+  const handleCreateRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await api.post('/requests', newRequest);
@@ -56,7 +57,7 @@ export default function MyRequests() {
     }
   };
 
-  const getStatusBadge = (statusName) => {
+  const getStatusBadge = (statusName : string) => {
     const status = (statusName || '').toString().toLowerCase();
     if (status === 'approved') return 'bg-green-100 text-green-700';
     if (status === 'rejected') return 'bg-red-100 text-red-700  ';
