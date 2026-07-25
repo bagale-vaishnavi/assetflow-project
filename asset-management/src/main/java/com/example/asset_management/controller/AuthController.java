@@ -59,8 +59,22 @@ public class AuthController {
                     user.getRole().getRoleName(),
                     user.getUserId()
             ));
+        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.badRequest().body(
+//                    new AuthResponse(
+//                            null,
+//                            null,
+//                            e.getMessage(),
+//                            null,
+//                            null
+//                    )
+//            );
+//        }
 
-        } catch (Exception e) {
+       // }
+        catch (Exception e) {
             System.out.println("Login failed for: " + request.getEmail());
             return ResponseEntity.badRequest().body(null);
         }
